@@ -128,6 +128,7 @@ https://gist.github.com/stefanv/353ded6353435bd84fa5e0ab4443e7d5
 
 Merge ratios for the past year:
 
+```
 1.00 Charles Harris
 0.16 Eric Wieser
 0.11 Allan Haldane
@@ -136,6 +137,7 @@ Merge ratios for the past year:
 0.02 Sebastian Berg
 0.02 Ralf Gommers
 0.01 Jaime Fernandez
+```
 
 ## Other things discussed during the sprint
 
