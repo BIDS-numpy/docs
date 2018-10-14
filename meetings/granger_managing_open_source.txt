@@ -1,0 +1,123 @@
+From: Brian Granger
+Date: Thu, 10 May 2018 17:39:23 -0700
+Subject: Re: Video chat - managing an open source project
+To: Matti Picus
+Cc: Stéfan van der Walt
+
+Reviewing with inline comments below...
+
+On Thu, May 10, 2018 at 1:38 AM, Matti Picus <matti.picus@gmail.com> wrote:
+> Thanks for the very honest and open discussion we had yesterday. Hopefully
+> we can meet up during the upcoming Jupyter sprint.
+> Stefan sent me some notes, I added from mine and here is what came out:
+>
+> We discussed various tools and procedures to allow stake holders a say in
+> the direction a project takes:
+> roadmaps, white papers, enhancement proposals, git hub issues and labels,
+> surveys, face-to-face meetings, project structure
+>
+> Roadmaps are usually by developers for developers, used to build developer
+> consensus.
+> - it is difficult to maintain them, once written they tend to stagnate
+> - can be made up of aggregating enhancement proposals
+> - ideally has very few items
+
+At least that is how we have used roadmaps. There may be other
+projects that use them with non-developers.
+
+By "few items" I think of roadmaps as being a relatively high level,
+coarse grained view of a project.
+
+
+>
+> White papers are more outward facing, less technical
+> - sections of what, how
+> - milestones with time, money budgets
+> - include a "who" section
+> - used in Jupyter as a basis for raising money or explaining the project to
+> potiential clients/users
+> - require alot of work to write
+> - more of Brian's focus right now
+> - set long-term goals
+
+I have seen other people refer to these things as "strategic initiatives"
+
+> Github
+> - Problem of granularity, issues are too low level to get an idea of what
+> larger structures need changing
+> - Take voting or other priority-establishing schemes into account
+>   - labeling, what axes are used?
+>   - maybe try some type of word clustering / word cloud?
+>   - triage is a lot of work but pays off
+>
+> Enhancement Proposals
+> - Not really actively used by Jupyter, but maybe more appropriate for Numpy
+>
+> Face to face is critical for building the community and hammering out
+> details.
+> - Can be virtual (video conferences)
+> - Try to keep conversations to 6 or fewer, and follow up with 1-on-1 and
+> clear summaries
+> - Allow feedback both before and after meetings
+
+In person meetings scale better to larger numbers of people, which is
+why they are important.
+
+>
+> Surveys are a nice tool to even the playing field, since not only vocal
+> participants have a chance to be heard
+> - ask broad questions
+> - example: how does the community feel about API breakage, when is it
+> appropriate?
+> - it is often hard to reach the right people (until we break something)
+
+One "trick" we have used with JupyterLab is to deliberately break
+something on a trial basis with the sole goal of seeing how many
+people complained. We had a feature that was difficult to maintain and
+we had no sense of how many people actually used it. Breaking it
+brought the users out of the woodwork and now we have a compatibility
+story.
+
+
+>
+> Project structure has a huge influence on the code base, and visa-versa
+> - maybe split into a number of subprojects
+> - creates feeling of ownership (for good or bad)
+> - lowers cognitive load
+> - defines boundaries and interfaces
+> - additional overhead to manage the groups
+> - allows dogfooding interactions between components
+> - areas:
+>    - dtypes (?)
+>    - random
+>    - linalg
+>    - ufuncs
+>    - python api, c-api
+> - even if we do not actually split, thinking of them as separate entities
+> can be productive
+
+Yes, I think this is one of the most important points.
+
+>
+> Overall we need a strategic view for setting priorities. One important
+> ingredient for success is trust, the community and the paid developers
+> should cultivate a culture of trust. One way to do that - don't only push
+> the big goal changes, also support ongoing tasks like documentation, user
+> support, packaging, ... Identify project pain points and use the developer
+> hours to ease those "death by infinite paper cut" tasks
+>
+> We should be in contact with non-obvious stake holders like downstream users
+> (Pandas, SciPy, Tensorflow, PyTorch) as well as possible alternatives
+> (Apache Arrow, ...). Discuss interoperability.
+>
+> We cannot escape the fact that the volume of work  the BIDS team can do is
+> probably more than part-time people can even review. We need a policy for
+> approving pull requests that can deal with that. With sufficient trust, not
+> all the developers need to be aware of all the details.
+
++1 to all this. Was great talking with both of you and this is a good
+summary of the conversation. See you at the end of the month!
+
+Cheers,
+
+Brian
