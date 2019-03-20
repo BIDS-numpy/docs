@@ -1,0 +1,76 @@
+Status Quo
+	A fixed seed and a fixed series of calls to ‘RandomState’ methods using the same parameters will always produce the same results up to roundoff error except when the values were incorrect. Incorrect values will be fixed and the NumPy version in which the fix was made will be noted in the relevant docstring. Extension of existing parameter ranges and the addition of new parameters is allowed as long the previous behavior remains unchanged.
+		Dates back to Nov 2008
+	Motivation
+		Exact reproducibility for simulations across numpy versions to support reproducible research
+		Stable unit tests
+	Why the policy fails to achieve objectives
+		Platform differences
+			C `long` integer size differences
+			Floating point arithmetic differences
+		Bug fixing breaks stream between versions
+		Non-random numpy changes between versions
+		LAPACK changes affects multivariate_normal()
+	Why the policy is hindering us
+		Many first-time contributors have submitted PRs to improve distributions and been driven away
+		Attempts to implement versioning while preserving stream-compatibility have proven fruitless
+			Increase maintenance difficulty
+			Difficult to use properly
+				Making it easy to get the latest, best version is fundamentally at odds with preserving compatibility
+	How to properly achieve objectives
+		Reproducible simulations
+			Pin versions of whole stack
+			This was not easy to do in 2008
+		Stable unit tests
+			Guarantee stability for a small core of routines most used in unit tests
+			Guide people to writing unit tests that use pseudorandom numbers responsibly
+				Generate inputs and record explicitly if small
+				Test that the results have the right properties, not the exact values
+New PRNG Design
+	Replaceable core PRNGs
+	Common class providing distributions wrapped around core PRNGs
+	np.random.seed() discouraged via visible warnings, possible deprecation cycle
+	`int64` integers instead of `long`
+	C API for core PRNGs
+		Easy to implement new core PRNGs to plug into numpy.random distributions
+	C API for distributions
+		Easy to draw random numbers from C code
+	Document and encourage best practices
+		Adopt get_random_state() utility like the one in scikit-learn
+		Document how to use settable streams for the relevant core PRNGs for multiprocessing
+New Compatibility Policy
+	RandomState will be frozen in place
+		Long deprecation cycle
+		Deprecation warnings increasingly noisy over time
+		New PRNG system under new name
+	Guarantee stability for a minimal core set of methods
+		The minimal set of methods to be usable to implement other distributions
+			.bytes()
+			.random_uintegers()
+			.random_sample()
+	StableRandom class with slightly broader subset of fixed implementations
+		For the purpose of supporting unit testing
+			Make it really easy for unit test users to transition
+			Performance is not very critical, so older algorithms are fine
+		Strict stream compatibility in this class as in status quo
+		Small set of distributions using the current RandomState implementations over Mersenne Twister
+			.randint()
+			.uniform()
+			.normal()
+			.standard_normal()
+			.choice()
+			.shuffle()
+			.permutation()
+	API source compatibility, as always
+	Breaking stream compatibility of distributions is possible in feature releases
+		Not bugfix releases
+			Unless if it's fixing a correctness bug
+		Caution will be taken
+			First release of new system will have many changes
+				We have accumulated a number of improvements that have been blocked by the old policy
+					Ziggurat for normals and exponentials
+					Better .choice()
+					`int64` variables
+			Future releases should strongly weight user's pain against improvements
+				Fine: Box-Muller to Ziggurat
+				Bad: Tweaking Ziggurat slightly
